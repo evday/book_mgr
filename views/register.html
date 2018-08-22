@@ -1,0 +1,51 @@
+{{template "header" .}}
+        <div class="container col-md-4 col-lg-offset-4">
+            <div class="panel panel-info" style="margin-top: 100px">
+                <div class="panel-heading" style="padding: 5px 0">
+                    <h4 class="text-center">注册新用户</h4>
+                </div>
+                <div class="row">
+                    <div class="panel-body col-md-10 col-md-offset-1">
+                        <form class="form-horizontal" id="s1" method="post" novalidate action="/register/post">
+                            <div class="form-group">
+                                <label for="inputUser" class="col-sm-3 control-label ">用户名称：</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="username" placeholder="用户名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword"
+                                    class="col-sm-3 control-label ">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                                <div class="col-md-9">
+            
+                                    <input type="password" class="form-control" name="password" placeholder="密码">
+            
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputRepeatPassword" class="col-sm-3 control-label ">确认密码：</label>
+                                <div class="col-md-9">
+            
+                                    <input type="password" class="form-control" name="re_password" placeholder="确认密码">
+            
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3" style="margin-left:330px;margin-top: 20px;">
+            
+                                    <input type="submit" value="注&nbsp;&nbsp;册" class="form-control btn-primary" id="register">
+            
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    
+        <script>
+        </script>
+    </body>
+</html>
+
