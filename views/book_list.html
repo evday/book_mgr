@@ -1,5 +1,10 @@
 {{template "header" .}}
 
+<style>
+     #publish_time,#rli,.input-group-addon{
+         background-color: #fff !important;
+     }
+</style>
 
 <div class="container" style="margin-top:50px;">
   <div class="panel">
@@ -9,6 +14,7 @@
     <div class="panel-body">
         <table class="table table-hover table-bordered">
             <thead>
+
               <tr>
                 <th>图书编号</th>
                 <th>书名</th>
@@ -20,56 +26,28 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>
-                  <a href="">
-                      <button class="btn btn-success" value="">修改</button>
-                  </a>
-                  <a href="">
-                      <button class="btn btn-danger" value="">删除</button>
-                  </a>
-              </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@fat</td>
-                <td>
-                  <a href="">
-                      <button class="btn btn-success" value="">修改</button>
-                  </a>
-                  <a href="">
-                      <button class="btn btn-danger" value="">删除</button>
-                  </a>
+
                 
-              </td>
-              </tr>
+                    
+            
+                {{range .}}
               <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@twitter</td>
+                <th scope="row">{{.book_id}}</th>
+                <td>{{.book_name}}</td>
+                <td>{{.book_author}}</td>
+                <td>{{.book_price}}</td>
+                <td>{{.book_stocknum}}</td>
+                <td>{{.book_publishtime}}</td>
                 <td>
-                  <a href="">
-                      <button class="btn btn-success" value="">修改</button>
+                  <!-- <a href=""></a> -->
+                      <button class="btn btn-success edit_book" edit_id={{.book_id}} data-toggle="Modal" data-target="#editModal">修改</button>
+                  <!-- </a> -->
+                  <a href="/delete_book?book_id={{.book_id}}">
+                      <button class="btn btn-danger delete_book" value="">删除</button>
                   </a>
-                  <a href="">
-                      <button class="btn btn-danger" value="">删除</button>
-                  </a>
-                 
               </td>
               </tr>
+              {{end}}
             </tbody>
         </table>
     </div>
@@ -113,12 +91,12 @@
                           <input type="text" class="form-control" id="book-name" placeholder="书名" name="book_name">
                         </div>
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                           <label for="publish-time" class="col-sm-2 control-label" style="margin-left:20px;">出版日期:</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" id="publish-time" placeholder="出版日期" name="publish_time">
                           </div>
-                        </div>
+                        </div> -->
 
                         
                         
@@ -129,17 +107,16 @@
                           </div>
                         </div>
 
-                        <div class="form-group inline-group">
-                            <label for="add-num" class="col-sm-2 control-label" style="margin-left:20px;">添加数量:</label>
-                            <div class="errors"></div>
-                            <div class="input-group date form_date col-sm-7" data-date="" data-date-format="dd MM yyyy"
-                                 data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                                <input class="form-control"  type="text" value="" id="rli" readonly
-                                       placeholder="请选择日期"/>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <div class="form-group">
+                                <label for="add-num" class="col-sm-2 control-label " style="margin-left:20px;">出版日期:</label>
+                                <div class="input-group date form_date" data-date="" data-date-format="dd MM yyyy"
+                                 data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" style="width:433px;padding-left:15px;">
+                                    <input class="form-control" type="text" value="" id="rli" readonly
+                                       placeholder="请选择日期" name="publish_time">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <input type="hidden" id="dtp_input2" value=""/><br/>
                             </div>
-                            <input type="hidden" id="dtp_input2" value=""/><br/>
-                        </div>
 
 
                         <div class="modal-footer">
@@ -154,6 +131,80 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">添加书籍</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                          <label for="book-id" class="col-sm-2 control-label" style="margin-left:20px;">书籍ID:</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="book_id" placeholder="书籍唯一标识" name="book_id">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="book-price" class="col-sm-2 control-label" style="margin-left:20px;">价格:</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="book_price" placeholder="价格" name="price">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-author" class="col-sm-2 control-label" style="margin-left:20px;">作者:</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="book_author" placeholder="作者" name="author">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="book-name" class="col-sm-2 control-label" style="margin-left:20px;">书籍名称:</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="book_name" placeholder="书名" name="book_name">
+                            </div>
+                          </div>
+                          <!-- <div class="form-group">
+                              <label for="publish-time" class="col-sm-2 control-label" style="margin-left:20px;">出版日期:</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="publish-time" placeholder="出版日期" name="publish_time">
+                              </div>
+                            </div> -->
+    
+                            
+                            
+                            <div class="form-group">
+                              <label for="add-num" class="col-sm-2 control-label" style="margin-left:20px;">添加数量:</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="add_num" placeholder="添加数量" name="add_num">
+                              </div>
+                            </div>
+    
+                            <div class="form-group">
+                                    <label for="add-num" class="col-sm-2 control-label " style="margin-left:20px;">出版日期:</label>
+                                    <div class="input-group date form_date" data-date="" data-date-format="dd MM yyyy"
+                                     data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" style="width:433px;padding-left:15px;">
+                                        <input class="form-control" type="text" value="" id="publish_time" readonly
+                                           placeholder="请选择日期" name="publish_time">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input2" value=""/><br/>
+                                </div>
+    
+    
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" id="modify">提交更改</button>
+                            </div>
+          
+                      </form>
+    
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
 
 <script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap-datetimepicker.js"></script>
@@ -181,7 +232,7 @@
         return fmt;
     };
     SELECT_ROOM = {"DEL": {}, "ADD": {}};
-    CHOSE_DATE = new Date().Format("yyyy-MM-dd");
+    CHOSE_DATE = new Date().Format("yyyy:MM:dd");
     //页面加载的时候就执行
     $(function () {
         initDatePicker();
@@ -189,7 +240,7 @@
     // 初始化时间插件
     function initDatePicker() {
         $('.form_date').datetimepicker({
-            format: 'yyyy-mm-dd',
+            format: 'yyyy:mm:dd',
             language: 'zh-CN',
             bootcssVer: 3,//bootstrap3,避免小图标不出现,好像没什么卵用
             weekStart: 1,
@@ -200,13 +251,68 @@
             startView: 2,
             minView: 2,
             forceParse: 0
-        }).on("changeDate", changeDate);
+        });
     }
     // 时间插件change函数
-    function changeDate(ev) {
-        CHOSE_DATE = ev.date.Format('yyyy-MM-dd');
-        initBookInfo(CHOSE_DATE)
-    }
+    // function changeDate(ev) {
+    //     CHOSE_DATE = ev.date.Format('yyyy:MM:dd');
+    //     initBookInfo(CHOSE_DATE)
+    // }
+
+    //编辑书籍
+    $(".edit_book").click(function(){
+       
+        var book_id = $(this).attr('edit_id')
+        $.ajax({
+            url:"/edit_book",
+            type:"GET",
+            data:{
+                "book_id":book_id,
+            },
+            success:function(data){
+                console.log(data)
+                $('#book_id').attr('value',data.book_id).attr('disabled','true')
+                $('#book_name').attr('value',data.book_name)
+                $('#book_price').attr('value',data.book_price)
+                $('#book_author').attr('value',data.book_author)
+                $('#publish_time').attr('value',data.book_publishtime)
+                $('#add_num').attr('value',data.book_stocknum)
+
+                $('#editModal').modal('show')
+                     
+            }
+            
+        })
+    })
+
+    $('#modify').click(function(){
+        var book_id = $('#book_id').attr('value')
+        var book_name = $('#book_name').attr('value')
+        var book_price = $('#book_price').attr('value')
+        var book_author = $('#book_author').attr('value')
+        var book_publishtime = $('#publish_time').attr('value')
+        var book_stocknum = $('#add_num').attr('value')
+
+        $.ajax({
+            url:"/update_book",
+            type:"POST",
+            data:{
+                "book_id":book_id,
+                "book_name":book_name,
+                "price":book_price,
+                "publish_time":book_publishtime,
+                "add_num":book_stocknum,
+                "author":book_author,
+            },
+            success:function(data){
+                window.location.reload()
+            }
+        })
+
+    })
+
+
+
 </script>
 </body>
 </html>

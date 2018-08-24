@@ -22,6 +22,13 @@ func InitRouter() *gin.Engine{
 	router.GET("/book_list",view.GetBookList)
 	router.POST("/book_add",view.AddBook)
 
+	//修改书籍
+	router.GET("/edit_book",view.EditOneBook)
+	router.POST("/update_book",view.BookUpdate)
+
+	//删除书籍
+	router.GET("/delete_book",view.DeleteBook)
+
 	return router
 
 }
